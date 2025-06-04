@@ -1,0 +1,393 @@
+/* Styles Globaux et Conteneur */
+.container {
+  min-height: 100vh;
+  padding: 0; /* Enlever le padding par défaut si vous en aviez */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(to bottom, #87CEEB, #4682B4); /* Dégradé bleu ciel */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* Police système moderne */
+}
+
+.main {
+    box-sizing: border-box; /* Ensure box-sizing is applied */
+
+  padding: 2rem 0.75rem; /* Légèrement moins de padding horizontal pour les petits écrans */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 900px; /* Limiter la largeur max pour une meilleure lisibilité */
+}
+
+.title {
+  margin: 0;
+  line-height: 1.15;
+  font-size: 3rem; /* Taille H1 */
+  text-align: center;
+  color: #fff; /* Titre principal en blanc */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  margin-bottom: 0.5rem;
+}
+
+.currentDate {
+  font-size: 1.1rem;
+  color: #f0f0f0; /* Date en gris clair */
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Style des Cartes */
+.card {
+    box-sizing: border-box; /* Ensure box-sizing is applied */
+
+  background-color: rgba(255, 255, 255, 0.9); /* Fond blanc semi-transparent */
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 700px; /* Les cartes peuvent être un peu moins larges que le main */
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-3px); /* Léger effet au survol */
+}
+
+.card h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-top: 0;
+   margin-bottom: 20px; /* Augmenter un peu l'espace en dessous */
+
+  border-bottom: 2px solid #007bff; /* Ligne bleue sous les titres de carte */
+  padding-bottom: 8px;
+    text-align: center; /* Centrer le titre */
+
+}
+
+.card h3 {
+  font-size: 1.4rem;
+  color: #444;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.card h4 {
+  font-size: 1.1rem;
+  color: #555;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+/* Formulaire de recherche */
+.searchForm {
+  display: flex;
+  margin-bottom: 25px;
+  width: 100%; 
+  max-width: 500px; /* Réduire un peu la largeur max par défaut */
+  margin-left: auto; /* Centre le formulaire s'il est plus petit que son conteneur */
+  margin-right: auto; /* Centre le formulaire s'il est plus petit que son conteneur */
+}
+
+
+
+
+.searchInput {
+  flex-grow: 1;
+  padding: 12px 15px;
+  border: 1px solid #bbb; /* Bordure légèrement plus visible */
+  border-radius: 6px 0 0 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  min-width: 0; /* Permet à l'input de rétrécir en dessous de sa largeur de contenu implicite */
+  /* background-color: #fff; */ /* Assurer un fond blanc si besoin */
+}
+.searchInput:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.searchButton {
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  font-size: 1rem;
+  white-space: nowrap; /* Empêche le texte du bouton de passer à la ligne */
+  transition: background-color 0.2s;
+}
+.searchButton:hover {
+  background-color: #0056b3;
+}
+
+/* Boutons d'action (Favoris, etc.) */
+.actionButton {
+  padding: 8px 15px;
+  background-color: #28a745; /* Vert pour actions positives */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+  margin: 5px;
+}
+.actionButton:hover {
+  background-color: #1e7e34;
+}
+
+.favoriteButton { /* Style spécifique pour le bouton "Ajouter aux favoris" dans la carte météo */
+  display: block; /* Pour qu'il prenne la largeur et permette le margin auto */
+  margin: 10px auto 15px auto; /* Centrer le bouton */
+  background-color: #ffc107; /* Jaune pour favoris */
+  color: #333;
+}
+.favoriteButton:hover {
+  background-color: #e0a800;
+}
+
+.removeButton {
+  background-color: #dc3545; /* Rouge pour suppression */
+  padding: 5px 10px;
+  font-size: 0.8rem;
+}
+.removeButton:hover {
+  background-color: #c82333;
+}
+
+/* Section Favoris */
+.favoritesSection .favoritesTitle { /* Titre spécifique pour la carte des favoris */
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.favoritesList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap; /* Permet aux favoris de passer à la ligne */
+  justify-content: center; /* Centre les boutons de favoris */
+  gap: 10px;
+}
+.favoritesList li {
+  display: flex; /* Pour aligner le bouton de ville et le bouton de suppression */
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  padding: 5px; /* Un peu de padding autour des boutons dans le li */
+}
+.favoritesList .actionButton { /* Bouton de ville dans la liste des favoris */
+  background-color: #6c757d; /* Gris pour les favoris existants */
+  margin-right: 5px; /* Espace avant le bouton X */
+}
+.favoritesList .actionButton:hover {
+  background-color: #5a6268;
+}
+
+/* Météo Actuelle */
+.currentWeatherDetails {
+  display: flex;
+  flex-direction: column; /* Par défaut en colonne pour mobile */
+  align-items: center;
+  gap: 20px; /* Espace entre les infos textuelles et l'icône */
+  margin-bottom: 20px;
+}
+.currentWeatherDetails > div:first-child { /* Le div avec les textes */
+  text-align: center;
+}
+
+/* Sous-cartes pour pluie et week-end */
+.subCardContainer {
+  display: flex;
+  flex-direction: column; /* Colonne par défaut */
+  gap: 15px;
+  margin-top: 20px;
+}
+.subCard {
+  background-color: #f8f9fa; /* Fond légèrement différent pour les sous-cartes */
+  border-radius: 8px;
+  padding: 15px;
+  border: 1px solid #e9ecef;
+}
+
+/* Prévisions Horaires et Journalières */
+.forecastTitle { /* Titre pour les sections de prévisions */
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.forecastList {
+  display: flex;
+  overflow-x: auto; /* Permet le défilement horizontal */
+  padding-bottom: 15px; /* Espace pour la barre de défilement */
+  gap: 15px; /* Espace entre les éléments de prévision */
+}
+.forecastItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 8px;
+  min-width: 100px; /* Largeur minimale pour chaque item */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.forecastTime {
+  font-weight: bold;
+  margin: 0 0 5px 0;
+  font-size: 0.9em;
+}
+.forecastDescription {
+  font-size: 0.8em;
+  text-transform: capitalize;
+  margin: 2px 0;
+  color: #555;
+  min-height: 2.4em; /* Pour 2 lignes de description */
+}
+.forecastTemp {
+  margin: 5px 0 0 0;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.weatherInfo {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #b3e5fc;
+  border-radius: 8px;
+  background-color: #ffffff;
+  width: 100%;
+}
+
+/* Petit spinner pour les boutons */
+.buttonSpinner {
+  display: inline-block; /* Pour qu'il s'aligne avec le texte */
+  border: 2px solid rgba(255, 255, 255, 0.3); /* Bordure plus claire pour contraste sur fond coloré */
+  border-top: 2px solid #fff; /* Couleur principale du spinner */
+  border-radius: 50%;
+  width: 14px; /* Plus petit */
+  height: 14px; /* Plus petit */
+  animation: spin 0.8s linear infinite;
+  margin-left: 8px; /* Espace par rapport au texte */
+  vertical-align: middle; /* Mieux aligner avec le texte */
+}
+
+/* Toast Notification */
+.toastNotification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 25px; /* Plus arrondi */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  font-size: 0.95rem;
+}
+
+/* Message pour les états vides dans les sections de prévisions */
+.emptyStateMessage {
+  text-align: center;
+  color: #6c757d; /* Gris neutre */
+  padding: 20px;
+}
+
+/* Spinner */
+.spinner {
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.skeletonLoader {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  width: 100%;
+}
+
+.skeletonLine {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { background-color: #e0e0e0; }
+  50% { background-color: #f0f0f0; }
+  100% { background-color: #e0e0e0; }
+}
+
+/* Media Queries pour l'organisation (Responsive Design) */
+@media (min-width: 768px) {
+  .main {
+    padding: 3rem 2rem;
+  }
+  .title {
+    font-size: 3.5rem;
+  }
+  .currentWeatherDetails {
+    flex-direction: row; /* Côte à côte sur écrans plus larges */
+    justify-content: space-around; /* Mieux répartir l'espace */
+    align-items: flex-start; /* Aligner en haut */
+  }
+  .currentWeatherDetails > div:first-child { /* Le div avec les textes */
+    text-align: left; /* Aligner le texte à gauche */
+  }
+  .subCardContainer {
+    flex-direction: row; /* Côte à côte sur écrans plus larges */
+    justify-content: space-between;
+  }
+  .subCard {
+    flex-basis: 48%; /* Pour qu'elles prennent environ la moitié de la largeur */
+  }
+}
+
+/* Media Query pour les écrans mobiles (jusqu'à 767px) */
+@media (max-width: 767px) {
+  .searchInput {
+        flex: 1; /* Let input take remaining space */
+
+  }
+  .searchButton {
+        flex-shrink: 0; /* Prevent button from shrinking */
+
+  }
+}
+/* Styles spécifiques pour les écrans très petits comme l'iPhone SE */
+@media (max-width: 380px) {
+  .main {
+    padding: 1.5rem 0.5rem; /* Encore moins de padding */
+  }
+  .searchInput, .searchButton {
+    font-size: 0.9rem; /* Réduire légèrement la taille de la police dans le champ et le bouton */
+    padding: 10px 12px; /* Réduire le padding du bouton et de l'input */
+  }
+}

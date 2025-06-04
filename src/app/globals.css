@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
+/* Exemple dans globals.css si vous n'utilisez pas la config Tailwind pour cela */
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --font-geist-sans: "Geist Sans", sans-serif; /* Remplacez par le nom correct de la police */
+  --font-geist-mono: "Geist Mono", monospace;   /* Remplacez par le nom correct de la police */
+  /* Ensuite, si vous avez besoin de --font-sans et --font-mono : */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
+
 
 @media (prefers-color-scheme: dark) {
   :root {
