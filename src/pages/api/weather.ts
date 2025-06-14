@@ -1,4 +1,4 @@
-// src/pages/api/weather.ts - Version améliorée avec meilleure gestion d'erreurs
+// src/pages/api/weather.ts - Version corrigée
 import { NextApiRequest, NextApiResponse } from 'next';
 
 // Interface pour une réponse d'erreur standardisée
@@ -95,7 +95,7 @@ export default async function handler(
         const errorBody = await response.text();
         errorDetails = errorBody;
         console.error('❌ Erreur API OpenWeatherMap:', errorDetails);
-      } catch (error) {
+      } catch {
         console.error('❌ Impossible de lire le corps de l\'erreur API');
       }
 
@@ -151,13 +151,13 @@ export default async function handler(
     
     return res.status(200).json(weatherData);
 
-  } catch (error) {
-    console.error('❌ Erreur lors de la récupération des données météo:', error);
+  } catch (err) {
+    console.error('❌ Erreur lors de la récupération des données météo:', err);
     
     const errorResponse: ErrorResponse = {
       error: 'Internal server error',
       message: 'Erreur interne du serveur',
-      details: error instanceof Error ? error.message : 'Erreur inconnue'
+      details: err instanceof Error ? err.message : 'Erreur inconnue'
     };
     
     return res.status(500).json(errorResponse);

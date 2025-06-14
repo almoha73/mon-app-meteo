@@ -1,4 +1,4 @@
-// src/pages/api/geocoding.ts - Version améliorée avec meilleure gestion d'erreurs
+// src/pages/api/geocoding.ts - Version corrigée
 import { NextApiRequest, NextApiResponse } from 'next';
 
 // Interface pour une réponse d'erreur standardisée
@@ -119,7 +119,7 @@ export default async function handler(
         const errorBody = await response.text();
         errorDetails = errorBody;
         console.error('❌ Erreur API Géocodage:', errorDetails);
-      } catch (error) {
+      } catch {
         console.error('❌ Impossible de lire le corps de l\'erreur géocodage');
       }
 
@@ -172,13 +172,13 @@ export default async function handler(
     
     return res.status(200).json(cleanedData);
 
-  } catch (error) {
-    console.error('❌ Erreur lors du géocodage:', error);
+  } catch (err) {
+    console.error('❌ Erreur lors du géocodage:', err);
     
     const errorResponse: ErrorResponse = {
       error: 'Internal server error',
       message: 'Erreur interne du serveur de géocodage',
-      details: error instanceof Error ? error.message : 'Erreur inconnue'
+      details: err instanceof Error ? err.message : 'Erreur inconnue'
     };
     
     return res.status(500).json(errorResponse);
