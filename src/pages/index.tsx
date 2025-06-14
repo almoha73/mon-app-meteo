@@ -360,13 +360,28 @@ export default function Home() {
 
   const isLoading = weatherLoading || isGettingLocation;
 
+  // Nouvel état pour la date côté client
+  const [clientDate, setClientDate] = useState<string>("");
+
+  // useEffect pour définir la date au format souhaité
+  useEffect(() => {
+    setClientDate(
+      new Date().toLocaleDateString('fr-FR', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      })
+    );
+  }, []);
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <div className={styles.headerHero}>
           <h1 className={styles.heroTitle}>Météo & Tendance du Jour</h1>
           <div className={styles.heroDate}>
-            {new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+            {clientDate}
           </div>
           <div className={styles.heroSub}>
             🌦️ Consultez la météo en temps réel, où que vous soyez !
