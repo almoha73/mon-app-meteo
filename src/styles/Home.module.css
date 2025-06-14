@@ -1,12 +1,4 @@
-/* --- Fond général --- */
-body, .container {
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-  font-family: 'Geist Sans', 'Segoe UI', Arial, sans-serif;
-  color: #222;
-}
+
 
 /* Styles Globaux et Conteneur */
 .container {
@@ -20,6 +12,9 @@ body, .container {
   margin: 0 auto;
   padding: 0 1rem;
   box-sizing: border-box;
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  font-family: 'Geist Sans', 'Segoe UI', Arial, sans-serif;
+  color: #222;
 }
 
 .main {
