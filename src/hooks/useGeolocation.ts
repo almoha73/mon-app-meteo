@@ -6,11 +6,6 @@ interface LocationState {
   longitude: number;
 }
 
-interface GeolocationError {
-  message: string;
-  code: number;
-}
-
 export const useGeolocation = () => {
   const [location, setLocation] = useState<LocationState | null>(null);
   const [isGettingLocation, setIsGettingLocation] = useState<boolean>(false);

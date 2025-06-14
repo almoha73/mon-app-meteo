@@ -119,7 +119,7 @@ export default async function handler(
         const errorBody = await response.text();
         errorDetails = errorBody;
         console.error('❌ Erreur API Géocodage:', errorDetails);
-      } catch (e) {
+      } catch (error) {
         console.error('❌ Impossible de lire le corps de l\'erreur géocodage');
       }
 
@@ -157,6 +157,7 @@ export default async function handler(
     });
     
     // Ajouter un timestamp et nettoyer les données
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const cleanedData = data.map((location: any) => ({
       name: location.name,
       local_names: location.local_names,

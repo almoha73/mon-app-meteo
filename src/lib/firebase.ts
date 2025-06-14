@@ -29,12 +29,23 @@ export type FirebaseDB = typeof db;
 
 export { app, auth, db };
 
+// Interface pour les erreurs Firebase
+interface FirebaseError {
+  code: string;
+  message: string;
+}
+
 // Utilitaires Firebase pour la gestion d'erreurs
-export const isFirebaseError = (error: any): error is { code: string; message: string } => {
-  return error && typeof error.code === 'string' && typeof error.message === 'string';
+export const isFirebaseError = (error: unknown): error is FirebaseError => {
+  return error !== null && 
+         typeof error === 'object' && 
+         'code' in error && 
+         'message' in error &&
+         typeof (error as FirebaseError).code === 'string' && 
+         typeof (error as FirebaseError).message === 'string';
 };
 
-export const getFirebaseErrorMessage = (error: any): string => {
+export const getFirebaseErrorMessage = (error: unknown): string => {
   if (isFirebaseError(error)) {
     switch (error.code) {
       case 'auth/network-request-failed':

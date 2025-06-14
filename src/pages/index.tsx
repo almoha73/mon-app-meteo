@@ -10,8 +10,7 @@ import {
   deleteDoc, 
   doc, 
   query, 
-  where, 
-  orderBy 
+  where
 } from 'firebase/firestore';
 
 import styles from '@/styles/Home.module.css';
@@ -72,7 +71,6 @@ export default function Home() {
     error: weatherError,
     fetchWeatherData,
     displayedCityName,
-    setDisplayedCityName,
     fetchCityNameFromCoords,
     currentCityData,
     searchCityByName,
@@ -83,55 +81,6 @@ export default function Home() {
     setToastMessage(message);
     setTimeout(() => setToastMessage(''), duration);
   }, []);
-
-  // Gestion de l'authentification Firebase
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setAuthLoading(false);
-      if (user) {
-        loadFavoriteCities(user.uid);
-      } else {
-        setFavoriteCitiesList([]);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  // Connexion anonyme automatique
-  const handleAnonymousSignIn = useCallback(async () => {
-    if (user) return;
-    
-    try {
-      setAuthLoading(true);
-      await signInAnonymously(auth);
-      showToast('Connexion réussie ! Vous pouvez maintenant sauvegarder vos favoris.');
-    } catch (error) {
-      console.error('Erreur lors de la connexion anonyme:', error);
-      setError({ 
-        message: `Erreur de connexion : ${getFirebaseErrorMessage(error)}`, 
-        source: 'auth' 
-      });
-    } finally {
-      setAuthLoading(false);
-    }
-  }, [user, showToast, setError]);
-
-  // Déconnexion
-  const handleSignOut = useCallback(async () => {
-    try {
-      await signOut(auth);
-      setFavoriteCitiesList([]);
-      showToast('Déconnexion réussie.');
-    } catch (error) {
-      console.error('Erreur lors de la déconnexion:', error);
-      setError({ 
-        message: `Erreur de déconnexion : ${getFirebaseErrorMessage(error)}`, 
-        source: 'auth' 
-      });
-    }
-  }, [showToast, setError]);
 
   // Charger les villes favorites depuis Firestore
   const loadFavoriteCities = useCallback(async (userId: string) => {
@@ -169,6 +118,55 @@ export default function Home() {
       setFavoritesLoading(false);
     }
   }, [setError]);
+
+  // Gestion de l'authentification Firebase
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setAuthLoading(false);
+      if (user) {
+        loadFavoriteCities(user.uid);
+      } else {
+        setFavoriteCitiesList([]);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [loadFavoriteCities]);
+
+  // Connexion anonyme automatique
+  const handleAnonymousSignIn = useCallback(async () => {
+    if (user) return;
+    
+    try {
+      setAuthLoading(true);
+      await signInAnonymously(auth);
+      showToast('Connexion réussie ! Vous pouvez maintenant sauvegarder vos favoris.');
+    } catch (error) {
+      console.error('Erreur lors de la connexion anonyme:', error);
+      setError({ 
+        message: `Erreur de connexion : ${getFirebaseErrorMessage(error)}`, 
+        source: 'auth' 
+      });
+    } finally {
+      setAuthLoading(false);
+    }
+  }, [user, showToast, setError]);
+
+  // Déconnexion
+  const handleSignOut = useCallback(async () => {
+    try {
+      await signOut(auth);
+      setFavoriteCitiesList([]);
+      showToast('Déconnexion réussie.');
+    } catch (error) {
+      console.error('Erreur lors de la déconnexion:', error);
+      setError({ 
+        message: `Erreur de déconnexion : ${getFirebaseErrorMessage(error)}`, 
+        source: 'auth' 
+      });
+    }
+  }, [showToast, setError]);
 
   // Ajouter une ville aux favoris
   const handleAddToFavorites = useCallback(async () => {
@@ -350,13 +348,6 @@ export default function Home() {
   // Calculer la prévision de pluie pour les 2 prochaines heures
   const rainForecastNextTwoHours = weather?.hourly ? 
     getHourlyRainForecastNextTwoHours(weather.hourly) : null;
-
-  const currentDate = new Date().toLocaleDateString('fr-FR', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
 
   const isLoading = weatherLoading || isGettingLocation;
 

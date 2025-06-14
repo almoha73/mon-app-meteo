@@ -95,7 +95,7 @@ export default async function handler(
         const errorBody = await response.text();
         errorDetails = errorBody;
         console.error('❌ Erreur API OpenWeatherMap:', errorDetails);
-      } catch (e) {
+      } catch (error) {
         console.error('❌ Impossible de lire le corps de l\'erreur API');
       }
 

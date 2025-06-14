@@ -1,12 +1,21 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  //output: 'export',
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     domains: ['openweathermap.org'],
-    unoptimized: true, // Ajoutez cette ligne si vous utilisez <Image> et n'avez pas de fournisseur cloud
+    unoptimized: true,
   },
-};
+  eslint: {
+    // Temporairement ignorer les erreurs ESLint en production
+    ignoreDuringBuilds: false,
+  },
+  typescript: {
+    // Temporairement ignorer les erreurs TypeScript en production
+    ignoreBuildErrors: false,
+  },
+  experimental: {
+    // Désactiver le strict mode si nécessaire
+    esmExternals: true,
+  },
+}
 
-export default nextConfig;
-
+module.exports = nextConfig

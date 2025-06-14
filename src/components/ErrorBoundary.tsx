@@ -60,7 +60,7 @@ class ErrorBoundary extends Component<Props, State> {
           <div style={{ textAlign: 'center', padding: '20px' }}>
             <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⚠️</div>
             <h2 style={{ color: '#dc3545', marginBottom: '1rem' }}>
-              Oops ! Une erreur inattendue s'est produite
+              Oops ! Une erreur inattendue s&apos;est produite
             </h2>
             <p style={{ marginBottom: '1.5rem', color: '#666' }}>
               Nous sommes désolés pour la gêne occasionnée. Cette erreur a été signalée à notre équipe.
@@ -77,7 +77,7 @@ class ErrorBoundary extends Component<Props, State> {
                 border: '1px solid #dee2e6'
               }}>
                 <summary style={{ cursor: 'pointer', marginBottom: '0.5rem', fontWeight: 'bold' }}>
-                  Détails de l'erreur (développement)
+                  Détails de l&apos;erreur (développement)
                 </summary>
                 <pre style={{ 
                   fontSize: '0.8rem', 
