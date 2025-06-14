@@ -1,7 +1,7 @@
 import React from "react";
 
 // Icônes SVG plus réalistes pour météo
-const icons: Record<string, JSX.Element> = {
+const icons: Record<string, React.ReactElement> = {
   // Soleil
   "01d": (
     <svg width="64" height="64" viewBox="0 0 64 64">
