@@ -1,4 +1,6 @@
 // src/components/ErrorBoundary.tsx
+'use client';
+
 import React, { Component, ReactNode } from 'react';
 import styles from '@/styles/Home.module.css';
 

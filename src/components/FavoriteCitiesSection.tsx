@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import styles from '@/styles/Home.module.css'; // Importer les styles
 import { User } from 'firebase/auth'; // Importer le type User
