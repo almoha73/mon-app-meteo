@@ -314,6 +314,8 @@
   margin: 20px auto;
 }
 
+
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -344,6 +346,32 @@
   50% { background-color: #f0f0f0; }
   100% { background-color: #e0e0e0; }
 }
+
+
+/* Ajoutez ceci à src/styles/Home.module.css */
+
+/* Styles pour ErrorBoundary */
+.errorBoundaryContainer {
+  background-color: rgba(220, 53, 69, 0.05);
+  border: 1px solid rgba(220, 53, 69, 0.2);
+  margin: 20px 0;
+}
+
+.errorBoundaryContainer h2 {
+  border-bottom: none; /* Supprimer la bordure bleue par défaut */
+}
+
+/* Animation pour l'icône d'erreur */
+@keyframes errorPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.errorBoundaryContainer div[style*="fontSize: '3rem'"] {
+  animation: errorPulse 2s infinite;
+}
+
 
 /* Media Queries pour l'organisation (Responsive Design) */
 @media (min-width: 768px) {
