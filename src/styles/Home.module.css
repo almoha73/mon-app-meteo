@@ -1,7 +1,15 @@
+/* --- Fond général --- */
+body, .container {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  font-family: 'Geist Sans', 'Segoe UI', Arial, sans-serif;
+  color: #222;
+}
+
 /* Styles Globaux et Conteneur */
 .container {
-  min-height: 100vh;
-  padding: 0; /* Enlever le padding par défaut si vous en aviez */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,6 +45,22 @@
   color: #f0f0f0; /* Date en gris clair */
   margin-bottom: 1.5rem;
   text-align: center;
+}
+
+/* --- Cartes effet glassmorphism --- */
+.card {
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+  transition: box-shadow 0.2s;
+}
+.card:hover {
+  box-shadow: 0 12px 36px 0 rgba(31, 38, 135, 0.18);
 }
 
 /* Style des Cartes */
@@ -80,6 +104,21 @@
   color: #555;
   margin-top: 0;
   margin-bottom: 8px;
+}
+
+/* --- Titres --- */
+.title {
+  font-size: 3.2rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: #222;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 8px rgba(255,255,255,0.2);
+}
+.currentDate {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 2rem;
 }
 
 /* Formulaire de recherche */
@@ -126,6 +165,40 @@
   background-color: #0056b3;
 }
 
+/* --- Boutons modernes --- */
+.actionButton, .searchButton, .favoriteButton, .removeButton {
+  border: none;
+  border-radius: 999px;
+  padding: 0.75em 1.6em;
+  font-size: 1rem;
+  font-weight: 500;
+  background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(67, 206, 162, 0.15);
+  transition: background 0.2s, transform 0.1s;
+}
+.actionButton:hover, .searchButton:hover, .favoriteButton:hover, .removeButton:hover {
+  background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%);
+  transform: translateY(-2px) scale(1.04);
+}
+.favoriteButton {
+  background: linear-gradient(90deg, #f7971e 0%, #ffd200 100%);
+  color: #333;
+}
+.favoriteButton:hover {
+  background: linear-gradient(90deg, #ffd200 0%, #f7971e 100%);
+}
+.removeButton {
+  background: linear-gradient(90deg, #ff5858 0%, #f09819 100%);
+  color: #fff;
+  font-size: 0.9rem;
+  padding: 0.5em 1.2em;
+}
+.removeButton:hover {
+  background: linear-gradient(90deg, #f09819 0%, #ff5858 100%);
+}
+
 /* Boutons d'action (Favoris, etc.) */
 .actionButton {
   padding: 8px 15px;
@@ -169,138 +242,209 @@
   text-align: center;
 }
 .favoritesList {
-  list-style: none;
-  padding: 0;
   display: flex;
-  flex-wrap: wrap; /* Permet aux favoris de passer à la ligne */
-  justify-content: center; /* Centre les boutons de favoris */
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  justify-content: center;
+  padding: 0;
+  list-style: none;
+  margin: 0;
 }
 .favoritesList li {
-  display: flex; /* Pour aligner le bouton de ville et le bouton de suppression */
+  display: flex;
   align-items: center;
-  background-color: #f8f9fa;
-  border-radius: 5px;
-  padding: 5px; /* Un peu de padding autour des boutons dans le li */
-}
-.favoritesList .actionButton { /* Bouton de ville dans la liste des favoris */
-  background-color: #6c757d; /* Gris pour les favoris existants */
-  margin-right: 5px; /* Espace avant le bouton X */
-}
-.favoritesList .actionButton:hover {
-  background-color: #5a6268;
-}
-
-/* Météo Actuelle */
-.currentWeatherDetails {
-  display: flex;
-  flex-direction: column; /* Par défaut en colonne pour mobile */
-  align-items: center;
-  gap: 20px; /* Espace entre les infos textuelles et l'icône */
-  margin-bottom: 20px;
-}
-.currentWeatherDetails > div:first-child { /* Le div avec les textes */
-  text-align: center;
-}
-
-/* Sous-cartes pour pluie et week-end */
-.subCardContainer {
-  display: flex;
-  flex-direction: column; /* Colonne par défaut */
-  gap: 15px;
-  margin-top: 20px;
-}
-.subCard {
-  background-color: #f8f9fa; /* Fond légèrement différent pour les sous-cartes */
-  border-radius: 8px;
-  padding: 15px;
-  border: 1px solid #e9ecef;
-}
-
-/* Prévisions Horaires et Journalières */
-.forecastTitle { /* Titre pour les sections de prévisions */
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 15px;
-  text-align: center;
-}
-.forecastList {
-  display: flex;
-  overflow-x: auto; /* Permet le défilement horizontal */
-  padding-bottom: 15px; /* Espace pour la barre de défilement */
-  gap: 15px; /* Espace entre les éléments de prévision */
-}
-.forecastItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  background-color: #f8f9fa;
-  padding: 10px;
-  border-radius: 8px;
-  min-width: 100px; /* Largeur minimale pour chaque item */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-.forecastTime {
-  font-weight: bold;
-  margin: 0 0 5px 0;
-  font-size: 0.9em;
-}
-.forecastDescription {
-  font-size: 0.8em;
-  text-transform: capitalize;
-  margin: 2px 0;
-  color: #555;
-  min-height: 2.4em; /* Pour 2 lignes de description */
-}
-.forecastTemp {
-  margin: 5px 0 0 0;
-  font-size: 1em;
+  background: rgba(255,255,255,0.7);
+  border-radius: 999px;
+  padding: 0.4em 1em 0.4em 1.2em;
+  box-shadow: 0 2px 8px rgba(67, 206, 162, 0.10);
+  margin: 0.2em 0;
   font-weight: 500;
+  font-size: 1.05em;
+  position: relative;
+  transition: box-shadow 0.18s, background 0.18s;
 }
-
-.weatherInfo {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  border: 1px solid #b3e5fc;
-  border-radius: 8px;
-  background-color: #ffffff;
-  width: 100%;
+.favoritesList li:hover {
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 4px 16px rgba(67, 206, 162, 0.18);
 }
-
-/* Petit spinner pour les boutons */
-.buttonSpinner {
-  display: inline-block; /* Pour qu'il s'aligne avec le texte */
-  border: 2px solid rgba(255, 255, 255, 0.3); /* Bordure plus claire pour contraste sur fond coloré */
-  border-top: 2px solid #fff; /* Couleur principale du spinner */
+.favoriteCityButton {
+  background: none;
+  border: none;
+  color: #185a9d;
+  font-weight: 600;
+  font-size: 1em;
+  margin-right: 0.7em;
+  cursor: pointer;
+  padding: 0.2em 0.5em;
+  border-radius: 999px;
+  transition: background 0.15s, color 0.15s;
+}
+.favoriteCityButton:hover {
+  background: #e3f6f5;
+  color: #007bff;
+}
+.removeFavoriteButton {
+  background: linear-gradient(135deg, #ff5858 0%, #f09819 100%);
+  border: none;
+  color: #fff;
+  font-size: 1.1em;
+  cursor: pointer;
+  margin-left: 0.2em;
   border-radius: 50%;
-  width: 14px; /* Plus petit */
-  height: 14px; /* Plus petit */
-  animation: spin 0.8s linear infinite;
-  margin-left: 8px; /* Espace par rapport au texte */
-  vertical-align: middle; /* Mieux aligner avec le texte */
+  width: 1.8em;
+  height: 1.8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s, transform 0.12s;
+  box-shadow: 0 1px 4px rgba(255, 88, 88, 0.10);
+  outline: none;
+}
+.removeFavoriteButton:hover {
+  background: linear-gradient(135deg, #f09819 0%, #ff5858 100%);
+  transform: scale(1.12) rotate(-12deg);
+  color: #fff;
+}
+.buttonSpinner {
+  border: 2px solid #fff;
+  border-top: 2px solid #ff5858;
+  border-radius: 50%;
+  width: 1em;
+  height: 1em;
+  animation: spin 0.7s linear infinite;
+  margin-left: 0.2em;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-/* Toast Notification */
-.toastNotification {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
-  color: white;
-  padding: 12px 25px;
-  border-radius: 25px; /* Plus arrondi */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  z-index: 1000;
-  font-size: 0.95rem;
+/* --- Responsive --- */
+@media (max-width: 600px) {
+  .main {
+    padding: 1rem 0.2rem;
+  }
+  .card {
+    padding: 1.2rem 0.5rem;
+  }
+  .title {
+    font-size: 2.1rem;
+  }
+  .forecastList {
+    gap: 0.7rem;
+  }
 }
 
-/* Message pour les états vides dans les sections de prévisions */
+/* Media Queries pour l'organisation (Responsive Design) */
+@media (min-width: 768px) {
+  .main {
+    padding: 3rem 2rem;
+  }
+  .title {
+    font-size: 3.5rem;
+  }
+  .currentWeatherDetails {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    margin: 24px 0 10px 0;
+    padding: 0 10px;
+  }
+  .currentWeatherInfo {
+    flex: 1;
+    min-width: 160px;
+  }
+  .currentWeatherInfo h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.25rem;
+    color: #185a9d;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .currentWeatherInfo p {
+    margin: 6px 0;
+    font-size: 1.08rem;
+    color: #333;
+    font-weight: 500;
+  }
+  .currentWeatherIconBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+  }
+  .currentWeatherIconBlock img {
+    filter: drop-shadow(0 2px 8px rgba(67, 206, 162, 0.10));
+    margin-bottom: 6px;
+  }
+  .currentWeatherDescription {
+    text-transform: capitalize;
+    margin-top: 5px;
+    font-size: 1.05em;
+    text-align: center;
+    color: #555;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+  }
+  .subCardContainer {
+    flex-direction: row; /* Côte à côte sur écrans plus larges */
+    justify-content: space-between;
+  }
+  .subCard {
+    flex-basis: 48%; /* Pour qu'elles prennent environ la moitié de la largeur */
+  }
+}
+
+/* Media Query pour les écrans mobiles (jusqu'à 767px) */
+@media (max-width: 767px) {
+  .searchInput {
+        flex: 1; /* Let input take remaining space */
+
+  }
+  .searchButton {
+        flex-shrink: 0; /* Prevent button from shrinking */
+
+  }
+}
+/* Styles spécifiques pour les écrans très petits comme l'iPhone SE */
+@media (max-width: 380px) {
+  .main {
+    padding: 1.5rem 0.5rem; /* Encore moins de padding */
+  }
+  .searchInput, .searchButton {
+    font-size: 0.9rem; /* Réduire légèrement la taille de la police dans le champ et le bouton */
+    padding: 10px 12px; /* Réduire le padding du bouton et de l'input */
+  }
+}
+
+/* --- Messages d'état --- */
 .emptyStateMessage {
+  color: #888;
+  font-style: italic;
   text-align: center;
-  color: #6c757d; /* Gris neutre */
-  padding: 20px;
+  padding: 1.2em 0;
+}
+
+/* --- Erreur --- */
+.errorBoundaryContainer {
+  background: rgba(255, 0, 0, 0.07);
+  border: 1px solid #ff5858;
+  border-radius: 12px;
+  margin: 2rem 0;
+  padding: 1.5rem;
+}
+
+/* Animation pour l'icône d'erreur */
+@keyframes errorPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.errorBoundaryContainer div[style*="fontSize: '3rem'"] {
+  animation: errorPulse 2s infinite;
 }
 
 /* Spinner */
@@ -313,8 +457,6 @@
   animation: spin 1s linear infinite;
   margin: 20px auto;
 }
-
-
 
 @keyframes spin {
   0% {
@@ -361,61 +503,121 @@
   border-bottom: none; /* Supprimer la bordure bleue par défaut */
 }
 
-/* Animation pour l'icône d'erreur */
-@keyframes errorPulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+/* --- Prévisions --- */
+.forecastList {
+  display: flex;
+  flex-direction: row;
+  gap: 1.2rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  justify-content: flex-start;
+  align-items: stretch;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: #43cea2 #e0e0e0;
+  margin-bottom: 0.5rem;
 }
 
-.errorBoundaryContainer div[style*="fontSize: '3rem'"] {
-  animation: errorPulse 2s infinite;
+.forecastItem {
+  background: rgba(255,255,255,0.7);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(67, 206, 162, 0.07);
+  padding: 1rem 0.8rem;
+  min-width: 110px;
+  text-align: center;
+  flex: 0 0 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scroll-snap-align: start;
+  transition: box-shadow 0.2s;
+}
+.forecastItem:hover {
+  box-shadow: 0 4px 16px rgba(67, 206, 162, 0.15);
 }
 
-
-/* Media Queries pour l'organisation (Responsive Design) */
-@media (min-width: 768px) {
-  .main {
-    padding: 3rem 2rem;
-  }
-  .title {
-    font-size: 3.5rem;
-  }
-  .currentWeatherDetails {
-    flex-direction: row; /* Côte à côte sur écrans plus larges */
-    justify-content: space-around; /* Mieux répartir l'espace */
-    align-items: flex-start; /* Aligner en haut */
-  }
-  .currentWeatherDetails > div:first-child { /* Le div avec les textes */
-    text-align: left; /* Aligner le texte à gauche */
-  }
-  .subCardContainer {
-    flex-direction: row; /* Côte à côte sur écrans plus larges */
-    justify-content: space-between;
-  }
-  .subCard {
-    flex-basis: 48%; /* Pour qu'elles prennent environ la moitié de la largeur */
-  }
+/* --- Résumé de la pluie --- */
+.rainSummaryContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 18px 0 0 0;
 }
 
-/* Media Query pour les écrans mobiles (jusqu'à 767px) */
-@media (max-width: 767px) {
-  .searchInput {
-        flex: 1; /* Let input take remaining space */
-
-  }
-  .searchButton {
-        flex-shrink: 0; /* Prevent button from shrinking */
-
-  }
+.rainSummaryBlock {
+  background: linear-gradient(90deg, #e3f0ff 0%, #f8f9fa 100%);
+  border-radius: 10px;
+  padding: 18px 20px;
+  box-shadow: 0 2px 8px rgba(67, 206, 162, 0.07);
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  border-left: 5px solid #007bff;
 }
-/* Styles spécifiques pour les écrans très petits comme l'iPhone SE */
-@media (max-width: 380px) {
-  .main {
-    padding: 1.5rem 0.5rem; /* Encore moins de padding */
-  }
-  .searchInput, .searchButton {
-    font-size: 0.9rem; /* Réduire légèrement la taille de la police dans le champ et le bouton */
-    padding: 10px 12px; /* Réduire le padding du bouton et de l'input */
-  }
+
+.rainSummaryBlock h4 {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+  color: #007bff;
+  font-weight: 700;
+}
+
+.rainSummaryBlock .rainIcon {
+  font-size: 2.1rem;
+  margin-right: 12px;
+  margin-top: 2px;
+}
+
+.rainSummaryText {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #222;
+}
+
+.rainSummaryText.good {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.rainSummaryText.bad {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+/* --- Hero Header --- */
+.headerHero {
+  background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+  border-radius: 18px;
+  box-shadow: 0 6px 24px rgba(67, 206, 162, 0.10);
+  padding: 2.5rem 1.5rem 2rem 1.5rem;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.heroTitle {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #185a9d;
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 8px rgba(255,255,255,0.18);
+}
+
+.heroDate {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 0.7rem;
+  font-weight: 500;
+}
+
+.heroSub {
+  font-size: 1.15rem;
+  color: #007bff;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  letter-spacing: 0.2px;
 }

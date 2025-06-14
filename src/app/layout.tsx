@@ -27,12 +27,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ErrorBoundary
-          onError={(error, errorInfo) => {
-            // En production, vous pourriez envoyer à un service de monitoring
-            console.error('Application Error:', error, errorInfo);
-          }}
-        >
+        <ErrorBoundary>
           {children}
         </ErrorBoundary>
       </body>

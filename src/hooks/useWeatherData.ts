@@ -143,6 +143,7 @@ export const useWeatherData = () => {
     fetchWeatherData,
     fetchCityNameFromCoords,
     searchCityByName,
+    setDisplayedCityName,
     clearError,
     clearData,
     setError

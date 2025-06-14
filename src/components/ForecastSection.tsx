@@ -1,8 +1,9 @@
 'use client';
 
 import React from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import styles from "@/styles/Home.module.css"; // Importer les styles
+import WeatherIcon from "./WeatherIcon";
 
 import { HourlyForecast, DailyForecast } from "@/types/weather"; // Importer les types
 import { formatHour, formatDay } from "@/utils/weather"; // Importer les utilitaires
@@ -36,12 +37,7 @@ const ForecastSection: React.FC<ForecastSectionProps> = ({ weather }) => {
                   <p className={styles.forecastTime}>
                     {formatHour(hour.dt, weather.timezone)}
                   </p>
-                  <Image
-                    src={`http://openweathermap.org/img/wn/${hour.weather[0].icon}.png`}
-                    alt={hour.weather[0].description}
-                    width={50}
-                    height={50}
-                  />
+                  <WeatherIcon icon={hour.weather[0].icon} size={50} />
                   <p className={styles.forecastDescription}>
                     {hour.weather[0].description}
                   </p>
@@ -77,12 +73,7 @@ const ForecastSection: React.FC<ForecastSectionProps> = ({ weather }) => {
                   <p className={styles.forecastTime}>
                     {formatDay(day.dt, weather.timezone)}
                   </p>
-                  <Image
-                    src={`http://openweathermap.org/img/wn/${day.weather[0].icon}.png`}
-                    alt={day.weather[0].description}
-                    width={50}
-                    height={50}
-                  />
+                  <WeatherIcon icon={day.weather[0].icon} size={50} />
                   <p className={styles.forecastDescription}>
                     {day.weather[0].description}
                   </p>

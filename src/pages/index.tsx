@@ -27,6 +27,7 @@ import CurrentWeatherCard from '@/components/CurrentWeatherCard';
 import ForecastSection from '@/components/ForecastSection';
 import FavoriteCitiesSection from '@/components/FavoriteCitiesSection';
 import ToastNotification from '@/components/ToastNotification';
+import WeekendForecastCard from '@/components/WeekendForecastCard';
 
 // Types
 import { FavoriteCity } from '@/types/weather';
@@ -53,6 +54,10 @@ export default function Home() {
   const [toastMessage, setToastMessage] = useState<string>('');
   const [weekendRainForecast, setWeekendRainForecast] = useState<string[]>([]);
 
+  // États pour les erreurs
+  const [error, setError] = useState<ErrorState | null>(null);
+  const clearError = useCallback(() => setError(null), []);
+
   // Hooks personnalisés
   const { 
     location, 
@@ -65,12 +70,12 @@ export default function Home() {
     weather,
     loading: weatherLoading,
     error: weatherError,
-    displayedCityName,
-    currentCityData,
     fetchWeatherData,
+    displayedCityName,
+    setDisplayedCityName,
+    fetchCityNameFromCoords,
+    currentCityData,
     searchCityByName,
-    clearError,
-    setError
   } = useWeatherData();
 
   // Fonction pour afficher un toast temporaire
@@ -263,26 +268,62 @@ export default function Home() {
 
   // Géolocalisation
   const handleGeolocation = useCallback(async () => {
+    console.log('[Geolocation] Début handleGeolocation');
     if (!isGeolocationSupported) {
-      setError({ 
-        message: "La géolocalisation n'est pas supportée par votre navigateur.", 
-        source: 'geolocation' 
+      console.error('[Geolocation] Géolocalisation non supportée par le navigateur.');
+      setError({
+        message: "La géolocalisation n'est pas supportée par votre navigateur.",
+        source: 'geolocation'
       });
       return;
     }
 
     try {
-      clearError();
-      const position = await requestLocation();
-      await fetchWeatherData(position.latitude, position.longitude, "Votre position actuelle");
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Erreur inconnue de géolocalisation";
-      setError({ 
-        message: errorMessage, 
-        source: 'geolocation' 
+      clearError(); // Efface l'erreur locale de l'UI
+      console.log('[Geolocation] Demande de la position...');
+      const position = await requestLocation(); // De useGeolocation
+      console.log('[Geolocation] Position obtenue:', position);
+
+      if (!position || !position.latitude || !position.longitude) {
+        console.error('[Geolocation] Coordonnées de position invalides ou non obtenues.');
+        setError({ message: 'Impossible d\'obtenir les coordonnées GPS.', source: 'geolocation' });
+        return;
+      }
+
+      console.log(`[Geolocation] Récupération du nom de la ville pour lat: ${position.latitude}, lon: ${position.longitude}`);
+      // fetchCityNameFromCoords vient de useWeatherData
+      const cityName = await fetchCityNameFromCoords(position.latitude, position.longitude);
+      console.log('[Geolocation] Nom de la ville obtenu:', cityName);
+
+      const finalCityName = cityName || "Votre position actuelle";
+      console.log(`[Geolocation] Appel de fetchWeatherData avec lat: ${position.latitude}, lon: ${position.longitude}, ville: ${finalCityName}`);
+      // fetchWeatherData vient de useWeatherData
+      await fetchWeatherData(position.latitude, position.longitude, finalCityName);
+      console.log('[Geolocation] fetchWeatherData terminé.');
+
+    } catch (err) {
+      console.error('[Geolocation] Erreur dans handleGeolocation:', err);
+      const errorMessage = err instanceof Error ? err.message : "Erreur inconnue lors de la géolocalisation.";
+      setError({ // Met à jour l'erreur locale de l'UI
+        message: errorMessage,
+        source: 'geolocation'
       });
+    } finally {
+      console.log('[Geolocation] Fin handleGeolocation');
     }
-  }, [isGeolocationSupported, requestLocation, fetchWeatherData, clearError, setError]);
+  }, [
+    isGeolocationSupported,
+    requestLocation,
+    fetchWeatherData,
+    fetchCityNameFromCoords,
+    clearError, // local
+    setError    // local
+  ]);
+
+  useEffect(() => {
+    handleGeolocation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Recherche de ville
   const handleSearch = useCallback(async (event: React.FormEvent) => {
@@ -318,13 +359,19 @@ export default function Home() {
   });
 
   const isLoading = weatherLoading || isGettingLocation;
-  const error = weatherError;
 
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1 className={styles.title}>Application Météo</h1>
-        <p className={styles.currentDate}>{currentDate}</p>
+        <div className={styles.headerHero}>
+          <h1 className={styles.heroTitle}>Météo & Tendance du Jour</h1>
+          <div className={styles.heroDate}>
+            {new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+          </div>
+          <div className={styles.heroSub}>
+            🌦️ Consultez la météo en temps réel, où que vous soyez !
+          </div>
+        </div>
 
         {/* Section d'authentification */}
         <section className={styles.card}>
@@ -384,7 +431,7 @@ export default function Home() {
         <LoadingSpinner isLoading={isLoading} />
 
         {/* Messages d'erreur */}
-        <ErrorMessage error={error} />
+        <ErrorMessage error={weatherError || error} />
 
         {/* Carte météo actuelle */}
         <CurrentWeatherCard
@@ -398,6 +445,8 @@ export default function Home() {
           weekendRainForecast={weekendRainForecast}
           rainForecastNextTwoHours={rainForecastNextTwoHours}
         />
+
+        <WeekendForecastCard forecasts={weekendRainForecast} />
 
         {/* Prévisions */}
         <ForecastSection weather={weather} />

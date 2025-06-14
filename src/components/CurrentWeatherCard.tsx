@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+import WeatherIcon from './WeatherIcon';
 import styles from '@/styles/Home.module.css'; // Importer les styles
 import { User } from 'firebase/auth'; // Importer le type User
 import { OneCallWeatherData, FavoriteCity} from '@/types/weather'; // Importer les types
@@ -63,42 +63,51 @@ const CurrentWeatherCard: React.FC<CurrentWeatherCardProps> = ({
       )}
 
       <div className={styles.currentWeatherDetails}>
-        <div>
-          <h3>Actuellement :</h3>
-          <p>Température : {weather.current.temp}°C</p>
-          <p>Ressenti : {weather.current.feels_like}°C</p>
-          <p>Humidité : {weather.current.humidity}%</p>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-          <Image
-            src={`http://openweathermap.org/img/wn/${weather.current.weather[0].icon}@2x.png`}
-            alt={weather.current.weather[0].description}
-            width={100} // Taille de l'icône @2x
-            height={100} // Taille de l'icône @2x
-          />
-          <p style={{ textTransform: 'capitalize', marginTop: '5px', fontSize: '0.9em', textAlign: 'center' }}>
-            {weather.current.weather[0].description}
-          </p>
-        </div>
-      </div>
+  <div className={styles.currentWeatherInfo}>
+    <h3>Actuellement&nbsp;:</h3>
+    <p>🌡️ Température&nbsp;: <strong>{weather.current.temp}°C</strong></p>
+    <p>🤗 Ressenti&nbsp;: <strong>{weather.current.feels_like}°C</strong></p>
+    <p>💧 Humidité&nbsp;: <strong>{weather.current.humidity}%</strong></p>
+  </div>
+  <div className={styles.currentWeatherIconBlock}>
+    <WeatherIcon icon={weather.current.weather[0].icon} size={90} />
+    <div className={styles.currentWeatherDescription}>
+      {weather.current.weather[0].description}
+    </div>
+  </div>
+</div>
 
-      {/* Sous-sections dans la carte principale */}
+      {/* Résumé de la pluie */}
       {( (weather.minutely && weather.minutely.length > 0) || (rainForecastNextTwoHours) || weekendRainForecast.length > 0) && (
-        <div className={styles.subCardContainer}>
-          {/* Section Pluie dans l'heure (existante) */}
-          {weather.minutely && weather.minutely.length > 0 && (
-            <div className={styles.subCard}>
-              <h4>Pluie dans l&apos;heure :</h4> {/* L'apostrophe est déjà échappée ici */}
-              <p style={{ color: '#007bff', fontWeight: 'bold' }}>{getMinutelyRainForecast(weather.minutely)}</p>
-           
-            
+        <div className={styles.rainSummaryContainer}>
+          {/* Pluie dans l'heure */}
+          <div className={styles.rainSummaryBlock}>
+            <span className={styles.rainIcon}>🌦️</span>
+            <div>
+              <h4>Pluie dans l&apos;heure :</h4>
+              <p
+                className={`${styles.rainSummaryText} ${
+                  getMinutelyRainForecast(weather.minutely).includes('Pas de') ? styles.good : styles.bad
+                }`}
+              >
+                {getMinutelyRainForecast(weather.minutely)}
+              </p>
             </div>
-          )}
-          {/* Section pour la prévision de pluie dans les 2 prochaines heures */}
+          </div>
+          {/* Pluie dans les 2h */}
           {rainForecastNextTwoHours && (
-            <div className={styles.subCard}>
-              <h4>Pluie dans les 2h :</h4>
-              <p style={{ color: '#28a745', fontWeight: 'bold' }}>{rainForecastNextTwoHours}</p>
+            <div className={styles.rainSummaryBlock}>
+              <span className={styles.rainIcon}>⏱️</span>
+              <div>
+                <h4>Pluie dans les 2h :</h4>
+                <p
+                  className={`${styles.rainSummaryText} ${
+                    rainForecastNextTwoHours.includes('Pas de') ? styles.good : styles.bad
+                  }`}
+                >
+                  {rainForecastNextTwoHours}
+                </p>
+              </div>
             </div>
           )}
         </div>
