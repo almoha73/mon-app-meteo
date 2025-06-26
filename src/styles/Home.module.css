@@ -484,7 +484,7 @@
   margin: 5px 0;
 }
 
-/* --- Résumé de la pluie amélioré --- */
+/* --- Résumé de la pluie amélioré avec couleurs visibles --- */
 .rainSummaryContainer {
   display: flex;
   flex-direction: column;
@@ -525,24 +525,25 @@
 .rainSummaryText {
   margin: 0;
   font-size: 1.05rem;
-  font-weight: 500;
+  font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
+/* Couleurs très visibles sur fond violet */
 .rainSummaryText.good {
-  color: #81C784;
-  font-weight: 600;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  color: #00E676; /* Vert fluo très visible */
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .rainSummaryText.bad {
-  color: #F48FB1;
-  font-weight: 600;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  color: #FF5722; /* Rouge-orange très visible */
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* --- Prévisions week-end améliorées --- */
+/* --- Prévisions week-end avec couleurs très visibles --- */
 .weekendForecastItem {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
