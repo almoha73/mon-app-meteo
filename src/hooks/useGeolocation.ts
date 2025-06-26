@@ -22,7 +22,7 @@ export const useGeolocation = () => {
 
       const options: PositionOptions = {
         enableHighAccuracy: true,  // Utiliser GPS si disponible
-        timeout: 15000,           // Timeout de 15 secondes
+        timeout: 30000,           // Timeout de 30 secondes (augmenté de 15 à 30)
         maximumAge: 300000        // Cache de 5 minutes
       };
 
