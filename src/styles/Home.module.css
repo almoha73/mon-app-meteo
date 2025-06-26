@@ -531,15 +531,28 @@
 }
 
 .rainSummaryText.good {
-  color: rgba(40, 167, 69, 1);
+  color: #81C784;
   font-weight: 600;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .rainSummaryText.bad {
-  color: rgba(220, 53, 69, 1);
+  color: #F48FB1;
   font-weight: 600;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Prévisions week-end améliorées --- */
+.weekendForecastItem {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.weekendForecastItem:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 /* --- Spinner amélioré --- */

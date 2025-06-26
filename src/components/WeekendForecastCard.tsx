@@ -17,12 +17,23 @@ const WeekendForecastCard: React.FC<WeekendForecastCardProps> = ({ forecasts }) 
         {forecasts.map((msg, idx) => (
           <li
             key={idx}
+            className={styles.weekendForecastItem}
             style={{
-              marginBottom: "0.7em",
-              fontWeight: 500,
-              color: msg.includes("Pluie") ? "#007bff" : msg.includes("couvert") ? "#888" : "#28a745",
+              marginBottom: "0.8em",
+              fontWeight: 600,
               textAlign: "center",
               fontSize: "1.1em",
+              padding: "0.8em 1em",
+              borderRadius: "12px",
+              background: "rgba(255, 255, 255, 0.1)",
+              backdropFilter: "blur(10px)",
+              border: "1px solid rgba(255, 255, 255, 0.2)",
+              textShadow: "0 1px 2px rgba(0, 0, 0, 0.3)",
+              color: msg.includes("Pluie") 
+                ? "#4FC3F7" // Bleu clair lumineux pour la pluie
+                : msg.includes("couvert") || msg.includes("nuageux")
+                ? "#FFB74D" // Orange clair pour couvert/nuageux
+                : "#81C784" // Vert clair lumineux pour pas de pluie
             }}
           >
             {msg}
