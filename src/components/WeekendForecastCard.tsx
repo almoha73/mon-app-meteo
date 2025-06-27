@@ -15,24 +15,38 @@ const WeekendForecastCard: React.FC<WeekendForecastCardProps> = ({ forecasts }) 
       </h3>
       <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
         {forecasts.map((msg, idx) => {
-          // Améliorer la détection de pluie/pas de pluie
-          const isRain = msg.includes("Pluie prévue") || 
-                        msg.includes("pluie prévue") || 
-                        msg.includes("Pluie possible") ||
-                        msg.includes("pluie possible");
+          // Debug: afficher le message dans la console pour voir exactement ce qui est généré
+          console.log(`Message week-end ${idx}:`, msg);
           
-          const isNoRain = msg.includes("Pas de pluie prévue") || 
-                          msg.includes("pas de pluie prévue") ||
-                          msg.includes("Pas de pluie") ||
-                          msg.includes("pas de pluie");
+          // Détection plus large et robuste
+          const lowerMsg = msg.toLowerCase();
+          
+          // Détection de pluie (rouge)
+          const isRain = lowerMsg.includes("pluie prévue") || 
+                        lowerMsg.includes("pluie possible") ||
+                        lowerMsg.includes("précipitation") ||
+                        lowerMsg.includes("averse") ||
+                        lowerMsg.includes("orage");
+          
+          // Détection de pas de pluie (vert) - plus spécifique
+          const isNoRain = lowerMsg.includes("pas de pluie") ||
+                          lowerMsg.includes("aucune pluie") ||
+                          lowerMsg.includes("sans pluie") ||
+                          lowerMsg.includes("sec") ||
+                          lowerMsg.includes("ensoleillé") ||
+                          lowerMsg.includes("nuageux") && !isRain;
           
           // Utiliser les mêmes couleurs que pour les prévisions de pluie
           let textColor = "rgba(255, 255, 255, 0.9)"; // Blanc par défaut
           
           if (isRain) {
             textColor = "#FF3D00"; // Rouge-orange foncé pour la pluie
+            console.log(`Message ${idx} détecté comme PLUIE:`, msg);
           } else if (isNoRain) {
             textColor = "#2E7D32"; // Vert foncé pour pas de pluie
+            console.log(`Message ${idx} détecté comme PAS DE PLUIE:`, msg);
+          } else {
+            console.log(`Message ${idx} détecté comme NEUTRE:`, msg);
           }
           
           return (
