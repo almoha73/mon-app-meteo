@@ -530,20 +530,20 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* Couleurs très visibles sur fond violet */
+/* Couleurs très visibles sur fond violet - harmonisées */
 .rainSummaryText.good {
-  color: #00E676; /* Vert fluo très visible */
+  color: #2E7D32; /* Vert foncé très visible - même couleur pour toutes les sections */
   font-weight: 700;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .rainSummaryText.bad {
-  color: #FF5722; /* Rouge-orange très visible */
+  color: #FF3D00; /* Rouge-orange foncé très visible - même couleur pour toutes les sections */
   font-weight: 700;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* --- Prévisions week-end avec couleurs très visibles --- */
+/* --- Prévisions week-end avec couleurs harmonisées --- */
 .weekendForecastItem {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
