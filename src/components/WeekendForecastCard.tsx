@@ -15,17 +15,24 @@ const WeekendForecastCard: React.FC<WeekendForecastCardProps> = ({ forecasts }) 
       </h3>
       <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
         {forecasts.map((msg, idx) => {
-          // Déterminer le type de météo pour choisir la couleur appropriée
-          const isRain = msg.includes("Pluie") || msg.includes("pluie");
-          const isNoRain = msg.includes("Pas de") || msg.includes("pas de");
+          // Améliorer la détection de pluie/pas de pluie
+          const isRain = msg.includes("Pluie prévue") || 
+                        msg.includes("pluie prévue") || 
+                        msg.includes("Pluie possible") ||
+                        msg.includes("pluie possible");
+          
+          const isNoRain = msg.includes("Pas de pluie prévue") || 
+                          msg.includes("pas de pluie prévue") ||
+                          msg.includes("Pas de pluie") ||
+                          msg.includes("pas de pluie");
           
           // Utiliser les mêmes couleurs que pour les prévisions de pluie
           let textColor = "rgba(255, 255, 255, 0.9)"; // Blanc par défaut
           
           if (isRain) {
-            textColor = "#FF3D00"; // Rouge-orange foncé très visible pour la pluie
+            textColor = "#FF3D00"; // Rouge-orange foncé pour la pluie
           } else if (isNoRain) {
-            textColor = "#2E7D32"; // Vert foncé très visible pour pas de pluie (même que rainSummaryText.good)
+            textColor = "#2E7D32"; // Vert foncé pour pas de pluie
           }
           
           return (
